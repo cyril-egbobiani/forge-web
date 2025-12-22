@@ -94,12 +94,12 @@ const Events: React.FC = () => {
                           }}
                         />
                       ) : null}
-                      <div className="h-16 w-16 rounded-lg bg-gray-100 flex items-center justify-center hidden">
+                      <div className="h-16 w-16 rounded-lg bg-gray-100 flex items-center justify-center ">
                         <span className="text-gray-400 text-xs">
                           No Image
                           </span>
                         </div>
-                      )}
+                      
                     </div>
                     <div className="ml-4">
                       <div className="flex items-center">
