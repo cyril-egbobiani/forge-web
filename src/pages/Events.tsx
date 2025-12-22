@@ -87,11 +87,16 @@ const Events: React.FC = () => {
                           className="h-16 w-16 rounded-lg object-cover"
                           src={event.imageUrl}
                           alt={event.title}
+                          onError={(e) => {
+                            console.error("Image failed to load:", event.imageUrl);
+                            e.currentTarget.style.display = 'none';
+                            e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                          }}
                         />
-                      ) : (
-                        <div className="h-16 w-16 rounded-lg bg-gray-100 flex items-center justify-center">
-                          <span className="text-gray-400 text-xs">
-                            No Image
+                      ) : null}
+                      <div className="h-16 w-16 rounded-lg bg-gray-100 flex items-center justify-center hidden">
+                        <span className="text-gray-400 text-xs">
+                          No Image
                           </span>
                         </div>
                       )}
