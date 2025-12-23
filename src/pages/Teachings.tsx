@@ -123,10 +123,10 @@ const Teachings: React.FC = () => {
                 <div className="px-4 py-4 flex items-center justify-between">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 h-16 w-16">
-                      {teaching.imageUrl ? (
+                      {teaching.thumbnailUrl ? (
                         <img
                           className="h-16 w-16 rounded-lg object-cover"
-                          src={teaching.imageUrl}
+                          src={teaching.thumbnailUrl}
                           alt={teaching.title}
                         />
                       ) : (
@@ -159,7 +159,12 @@ const Teachings: React.FC = () => {
                         {teaching.description}
                       </p>
                       <div className="mt-1 flex items-center text-sm text-gray-500">
-                        <span>By {teaching.author}</span>
+                        <span>
+                          By{" "}
+                          {typeof teaching.speaker === "string"
+                            ? teaching.speaker
+                            : teaching.speaker?.name || "Pastor"}
+                        </span>
                         {teaching.scripture && (
                           <>
                             <span className="mx-2">•</span>

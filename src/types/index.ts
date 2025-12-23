@@ -17,16 +17,18 @@ export interface Teaching {
   title: string;
   description: string;
   content: string;
-  author: string;
+  speaker: {
+    name: string;
+    profilePicture?: string;
+  };
   scripture?: string;
   category: "sermon" | "devotional" | "study" | "testimony" | "other";
   tags: string[];
-  imageUrl?: string;
+  thumbnailUrl?: string; // Changed from imageUrl
   videoUrl?: string;
   audioUrl?: string;
   youtubeUrl?: string;
   youtubeVideoId?: string;
-  videoThumbnailUrl?: string;
   isPublished: boolean;
   publishDate?: string;
   createdAt?: string;

@@ -35,35 +35,35 @@ const TeachingForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    // setValue,
-    // watch,
+    setValue,
+    watch,
   } = useForm<TeachingFormData>();
 
   // Helper function to extract YouTube video ID from URL
-  // const extractYouTubeId = (url: string) => {
-  //   if (!url) return "";
-  //   const regex =
-  //     /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-  //   const match = regex.exec(url);
-  //   return match ? match[1] : "";
-  // };
+  const extractYouTubeId = (url: string) => {
+    if (!url) return "";
+    const regex =
+      /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/ |.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/;
+    const match = regex.exec(url);
+    return match ? match[1] : "";
+  };
 
   // Watch for YouTube URL changes
-  // const watchedYoutubeUrl = watch("youtubeUrl");
+  const watchedYoutubeUrl = watch("youtubeUrl");
 
-  // useEffect(() => {
-  //   if (watchedYoutubeUrl) {
-  //     const videoId = extractYouTubeId(watchedYoutubeUrl);
-  //     setValue("youtubeVideoId", videoId);
+  useEffect(() => {
+    if (watchedYoutubeUrl) {
+      const videoId = extractYouTubeId(watchedYoutubeUrl);
+      setValue("youtubeVideoId", videoId);
 
-  //     // Auto-generate thumbnail preview if video ID is available
-  //     if (videoId && !imagePreview) {
-  //       setImagePreview(
-  //         `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
-  //       );
-  //     }
-  //   }
-  // }, [watchedYoutubeUrl, setValue, imagePreview]);
+      // Auto-generate thumbnail preview if video ID is available
+      if (videoId && !imagePreview) {
+        setImagePreview(
+          `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+        );
+      }
+    }
+  }, [watchedYoutubeUrl, setValue, imagePreview]);
 
   useEffect(() => {
     if (isEdit && id) {
@@ -80,7 +80,10 @@ const TeachingForm: React.FC = () => {
           title: teaching.title,
           description: teaching.description,
           content: teaching.content,
-          author: teaching.author,
+          author:
+            typeof teaching.speaker === "string"
+              ? teaching.speaker
+              : teaching.speaker?.name || "", // Handle both string and object structures
           scripture: teaching.scripture,
           category: teaching.category,
           tags: teaching.tags.join(", "),
@@ -88,8 +91,9 @@ const TeachingForm: React.FC = () => {
           youtubeUrl: teaching.youtubeUrl || "",
           youtubeVideoId: teaching.youtubeVideoId || "",
         });
-        if (teaching.imageUrl) {
-          setImagePreview(teaching.imageUrl);
+        if (teaching.thumbnailUrl) {
+          // Changed from imageUrl
+          setImagePreview(teaching.thumbnailUrl);
         }
       }
     } catch (error) {
@@ -144,12 +148,20 @@ const TeachingForm: React.FC = () => {
       setUploadingFiles(false);
 
       const teachingData: Omit<Teaching, "id"> = {
-        ...data,
+        title: data.title,
+        description: data.description,
+        content: data.content,
+        speaker: {
+          name: data.author, // Map author to speaker.name
+        },
+        scripture: data.scripture || undefined,
+        category: data.category,
         tags: data.tags
           .split(",")
           .map((tag) => tag.trim())
           .filter((tag) => tag.length > 0),
-        imageUrl: imageUrl || undefined,
+        isPublished: data.isPublished,
+        thumbnailUrl: imageUrl || undefined, // Use thumbnailUrl instead of imageUrl
         videoUrl: videoUrl || undefined,
         youtubeUrl: data.youtubeUrl || undefined,
         youtubeVideoId: data.youtubeVideoId || undefined,
