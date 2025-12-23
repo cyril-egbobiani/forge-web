@@ -17,14 +17,11 @@ export interface Teaching {
   title: string;
   description: string;
   content: string;
-  speaker: {
-    name: string;
-    profilePicture?: string;
-  };
+  author: string; // Simple flat field
   scripture?: string;
   category: "sermon" | "devotional" | "study" | "testimony" | "other";
   tags: string[];
-  thumbnailUrl?: string; // Changed from imageUrl
+  thumbnailUrl?: string;
   videoUrl?: string;
   audioUrl?: string;
   youtubeUrl?: string;

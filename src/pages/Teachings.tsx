@@ -159,12 +159,7 @@ const Teachings: React.FC = () => {
                         {teaching.description}
                       </p>
                       <div className="mt-1 flex items-center text-sm text-gray-500">
-                        <span>
-                          By{" "}
-                          {typeof teaching.speaker === "string"
-                            ? teaching.speaker
-                            : teaching.speaker?.name || "Pastor"}
-                        </span>
+                        <span>By {teaching.author}</span>
                         {teaching.scripture && (
                           <>
                             <span className="mx-2">•</span>

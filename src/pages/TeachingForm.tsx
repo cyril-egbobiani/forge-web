@@ -80,10 +80,7 @@ const TeachingForm: React.FC = () => {
           title: teaching.title,
           description: teaching.description,
           content: teaching.content,
-          author:
-            typeof teaching.speaker === "string"
-              ? teaching.speaker
-              : teaching.speaker?.name || "", // Handle both string and object structures
+          author: teaching.author, // Simple field access
           scripture: teaching.scripture,
           category: teaching.category,
           tags: teaching.tags.join(", "),
@@ -151,9 +148,7 @@ const TeachingForm: React.FC = () => {
         title: data.title,
         description: data.description,
         content: data.content,
-        speaker: {
-          name: data.author, // Map author to speaker.name
-        },
+        author: data.author, // Keep it simple
         scripture: data.scripture || undefined,
         category: data.category,
         tags: data.tags
@@ -161,7 +156,7 @@ const TeachingForm: React.FC = () => {
           .map((tag) => tag.trim())
           .filter((tag) => tag.length > 0),
         isPublished: data.isPublished,
-        thumbnailUrl: imageUrl || undefined, // Use thumbnailUrl instead of imageUrl
+        thumbnailUrl: imageUrl || undefined,
         videoUrl: videoUrl || undefined,
         youtubeUrl: data.youtubeUrl || undefined,
         youtubeVideoId: data.youtubeVideoId || undefined,
