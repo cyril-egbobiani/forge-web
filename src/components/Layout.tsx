@@ -4,6 +4,8 @@ import {
   HomeIcon,
   CalendarDaysIcon,
   BookOpenIcon,
+  HeartIcon,
+  TrophyIcon,
   Cog6ToothIcon,
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
@@ -14,8 +16,10 @@ const Layout: React.FC = () => {
 
   const navigation = [
     { name: "Dashboard", href: "/", icon: HomeIcon },
+    { name: "Teachings & AI", href: "/teachings", icon: BookOpenIcon },
     { name: "Events", href: "/events", icon: CalendarDaysIcon },
-    { name: "Teachings", href: "/teachings", icon: BookOpenIcon },
+    { name: "Prayer Wall", href: "/prayers", icon: HeartIcon },
+    { name: "Games & Stats", href: "/games", icon: TrophyIcon },
     { name: "Settings", href: "/settings", icon: Cog6ToothIcon },
   ];
 

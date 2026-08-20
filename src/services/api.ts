@@ -1,7 +1,11 @@
 import api from "../utils/api";
+import axios from "axios";
 import type {
   Event,
   Teaching,
+  AiInsights,
+  KeyMoment,
+  PrayerRequest,
   ApiResponse,
   AuthResponse,
   LoginCredentials,
@@ -9,7 +13,9 @@ import type {
   User,
 } from "../types";
 
-// Events API
+const PUBLIC_API_BASE = "http://localhost:3000/api";
+
+// Events API (Admin base: /api/admin)
 export const eventsApi = {
   getAll: () => api.get<ApiResponse<Event[]>>("/events"),
   getById: (id: string) => api.get<ApiResponse<Event>>(`/events/${id}`),
@@ -20,7 +26,7 @@ export const eventsApi = {
   delete: (id: string) => api.delete<ApiResponse<void>>(`/events/${id}`),
 };
 
-// Teachings API
+// Teachings API (Admin base: /api/admin)
 export const teachingsApi = {
   getAll: () => api.get<ApiResponse<Teaching[]>>("/teachings"),
   getById: (id: string) => api.get<ApiResponse<Teaching>>(`/teachings/${id}`),
@@ -33,9 +39,34 @@ export const teachingsApi = {
     api.patch<ApiResponse<Teaching>>(`/teachings/${id}/publish`),
   unpublish: (id: string) =>
     api.patch<ApiResponse<Teaching>>(`/teachings/${id}/unpublish`),
+  generateAi: (data: {
+    title: string;
+    description?: string;
+    content?: string;
+    author?: string;
+    scripture?: string;
+  }) =>
+    api.post<ApiResponse<{ aiInsights: AiInsights; keyMoments: KeyMoment[] }>>(
+      "/teachings/generate-ai",
+      data
+    ),
+  generateAiForId: (id: string) =>
+    api.post<ApiResponse<{ aiInsights: AiInsights; keyMoments: KeyMoment[] }>>(
+      `/teachings/${id}/generate-ai`
+    ),
 };
 
-// Auth API
+// Prayers Moderation API
+export const prayersApi = {
+  getAll: () => axios.get<{ success: boolean; prayerRequests: PrayerRequest[] }>(`${PUBLIC_API_BASE}/prayers`),
+};
+
+// Games Analytics API
+export const gamesApi = {
+  getLeaderboard: () => axios.get<{ success: boolean; leaderboard: any[] }>(`${PUBLIC_API_BASE}/game-sessions/leaderboard`),
+};
+
+// Auth API (Admin base: /api/admin)
 export const authApi = {
   login: (credentials: LoginCredentials) =>
     api.post<ApiResponse<AuthResponse>>("/auth/login", credentials),
@@ -50,7 +81,7 @@ export const uploadApi = {
   uploadImage: (file: File) => {
     const formData = new FormData();
     formData.append("image", file);
-    return api.post<ApiResponse<{ url: string }>>("/uploads/image", formData, {
+    return axios.post<ApiResponse<{ url: string }>>(`${PUBLIC_API_BASE}/uploads/image`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -59,7 +90,7 @@ export const uploadApi = {
   uploadAudio: (file: File) => {
     const formData = new FormData();
     formData.append("audio", file);
-    return api.post<ApiResponse<{ url: string }>>("/uploads/audio", formData, {
+    return axios.post<ApiResponse<{ url: string }>>(`${PUBLIC_API_BASE}/uploads/audio`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -69,7 +100,7 @@ export const uploadApi = {
     const formData = new FormData();
     formData.append("video", file);
     return api.post<ApiResponse<{ url: string }>>(
-      "/admin/uploads/video",
+      "/uploads/video",
       formData,
       {
         headers: {

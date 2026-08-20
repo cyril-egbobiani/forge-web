@@ -14,6 +14,8 @@ import Events from "./pages/Events";
 import EventForm from "./pages/EventForm";
 import Teachings from "./pages/Teachings";
 import TeachingForm from "./pages/TeachingForm";
+import Prayers from "./pages/Prayers";
+import Games from "./pages/Games";
 import Settings from "./pages/Settings";
 
 // Protected Route component
@@ -49,6 +51,8 @@ function App() {
             <Route path="teachings" element={<Teachings />} />
             <Route path="teachings/new" element={<TeachingForm />} />
             <Route path="teachings/edit/:id" element={<TeachingForm />} />
+            <Route path="prayers" element={<Prayers />} />
+            <Route path="games" element={<Games />} />
             <Route path="settings" element={<Settings />} />
           </Route>
 

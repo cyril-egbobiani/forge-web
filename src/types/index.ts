@@ -12,12 +12,35 @@ export interface Event {
   updatedAt?: string;
 }
 
+export interface KeyMoment {
+  timestamp: string;
+  seconds: number;
+  title: string;
+  subtitle?: string;
+  scripture?: string;
+  takeaway?: string;
+}
+
+export interface ScriptureReference {
+  reference: string;
+  context?: string;
+  greekExegesis?: string;
+}
+
+export interface AiInsights {
+  coreThesis?: string;
+  theologicalContext?: string;
+  scriptureReferences?: ScriptureReference[];
+  reflectionPrompts?: string[];
+  generatedAt?: string;
+}
+
 export interface Teaching {
   id?: string;
   title: string;
   description: string;
   content: string;
-  author: string; // Simple flat field
+  author: string;
   scripture?: string;
   category: "sermon" | "devotional" | "study" | "testimony" | "other";
   tags: string[];
@@ -26,10 +49,34 @@ export interface Teaching {
   audioUrl?: string;
   youtubeUrl?: string;
   youtubeVideoId?: string;
+  aiInsights?: AiInsights;
+  keyMoments?: KeyMoment[];
   isPublished: boolean;
   publishDate?: string;
   createdAt?: string;
   updatedAt?: string;
+}
+
+export interface PrayerRequest {
+  _id: string;
+  title: string;
+  description: string;
+  category: string;
+  isAnonymous: boolean;
+  authorName?: string;
+  status: "active" | "answered" | "archived";
+  prayerCount: number;
+  createdAt: string;
+}
+
+export interface GameSession {
+  _id: string;
+  username: string;
+  gameType: string;
+  score: number;
+  scorePercentage: number;
+  timeTaken: number;
+  createdAt: string;
 }
 
 export interface ApiResponse<T> {
