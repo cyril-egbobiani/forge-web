@@ -45,6 +45,8 @@ export const teachingsApi = {
     content?: string;
     author?: string;
     scripture?: string;
+    youtubeUrl?: string;
+    youtubeVideoId?: string;
   }) =>
     api.post<ApiResponse<{ aiInsights: AiInsights; keyMoments: KeyMoment[] }>>(
       "/teachings/generate-ai",
@@ -81,7 +83,7 @@ export const uploadApi = {
   uploadImage: (file: File) => {
     const formData = new FormData();
     formData.append("image", file);
-    return axios.post<ApiResponse<{ url: string }>>(`${PUBLIC_API_BASE}/uploads/image`, formData, {
+    return api.post<ApiResponse<{ url: string }>>("/uploads/image", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -90,7 +92,7 @@ export const uploadApi = {
   uploadAudio: (file: File) => {
     const formData = new FormData();
     formData.append("audio", file);
-    return axios.post<ApiResponse<{ url: string }>>(`${PUBLIC_API_BASE}/uploads/audio`, formData, {
+    return api.post<ApiResponse<{ url: string }>>("/uploads/audio", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

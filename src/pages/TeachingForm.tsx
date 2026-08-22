@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -124,6 +124,8 @@ const TeachingForm: React.FC = () => {
         content: values.content,
         author: values.author,
         scripture: values.scripture,
+        youtubeUrl: values.youtubeUrl,
+        youtubeVideoId: values.youtubeVideoId,
       });
 
       if (res.data.success) {
@@ -515,3 +517,4 @@ const TeachingForm: React.FC = () => {
 };
 
 export default TeachingForm;
+
