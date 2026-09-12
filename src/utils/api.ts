@@ -1,7 +1,12 @@
 import axios from "axios";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:3000/api/admin";
+const BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.VITE_API_URL
+    ? import.meta.env.VITE_API_URL.replace(/\/api\/admin\/?$/, "").replace(/\/api\/?$/, "")
+    : "https://forge-backend-hdvz.onrender.com");
+
+const API_BASE_URL = `${BASE_URL.replace(/\/$/, "")}/api/admin`;
 
 export const api = axios.create({
   baseURL: API_BASE_URL,

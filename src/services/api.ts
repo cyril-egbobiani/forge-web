@@ -13,7 +13,13 @@ import type {
   User,
 } from "../types";
 
-const PUBLIC_API_BASE = "http://localhost:3000/api";
+const BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.VITE_API_URL
+    ? import.meta.env.VITE_API_URL.replace(/\/api\/admin\/?$/, "").replace(/\/api\/?$/, "")
+    : "https://forge-backend-hdvz.onrender.com");
+
+const PUBLIC_API_BASE = `${BASE_URL.replace(/\/$/, "")}/api`;
 
 // Events API (Admin base: /api/admin)
 export const eventsApi = {

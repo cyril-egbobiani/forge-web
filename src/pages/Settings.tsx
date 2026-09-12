@@ -28,14 +28,16 @@ const Settings: React.FC = () => {
                 id="backend-api-url"
                 type="text"
                 value={
-                  import.meta.env.VITE_API_URL || "http://localhost:3001/api"
+                  import.meta.env.VITE_API_BASE_URL ||
+                  import.meta.env.VITE_API_URL ||
+                  "https://forge-backend-hdvz.onrender.com"
                 }
                 readOnly
                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm bg-gray-50 text-gray-500"
                 title="Backend API URL configuration"
               />
               <p className="mt-1 text-sm text-gray-500">
-                Configure this in your .env file as VITE_API_URL
+                Configure this in your .env file as VITE_API_BASE_URL
               </p>
             </div>
           </div>
