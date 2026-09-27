@@ -213,7 +213,8 @@ const TeachingForm: React.FC = () => {
         author: data.author,
         scripture: data.scripture,
         category: data.category,
-        tags: data.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
+        // No tags input on the form for new teachings, so tags can be undefined
+        tags: (data.tags ?? "").split(",").map((tag) => tag.trim()).filter(Boolean),
         thumbnailUrl: imageUrl,
         videoUrl: videoUrl,
         youtubeUrl: data.youtubeUrl,

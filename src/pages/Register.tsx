@@ -33,8 +33,13 @@ const Register: React.FC = () => {
         password: data.password,
       });
       if (response.data.success) {
-        localStorage.setItem("adminToken", response.data.data.token);
-        toast.success("Account created successfully!");
+        // A signed-in admin creating another admin keeps their own session
+        if (localStorage.getItem("adminToken")) {
+          toast.success(`Admin account "${data.username}" created`);
+        } else {
+          localStorage.setItem("adminToken", response.data.data.token);
+          toast.success("Account created successfully!");
+        }
         navigate("/");
       }
     } catch (error) {
